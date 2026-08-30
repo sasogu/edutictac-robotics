@@ -110,6 +110,28 @@ class MicrobitAPI:
 class MusicAPI:
     """API mínima de música para código educativo y Makey Makey."""
 
+    # Melodías con nombre del módulo `music` real de micro:bit. Aquí el valor
+    # no suena (el simulador solo registra la llamada); existen para que
+    # `music.play(music.BADDY)` no falle por AttributeError y el código
+    # generado sea idéntico al que se exporta a hardware real, donde el
+    # firmware sí las reproduce.
+    BADDY = "BADDY"
+    BIRTHDAY = "BIRTHDAY"
+    BLUES = "BLUES"
+    CHASE = "CHASE"
+    ENTERTAINER = "ENTERTAINER"
+    FUNERAL = "FUNERAL"
+    FUNK = "FUNK"
+    JUMP_UP = "JUMP_UP"
+    JUMP_DOWN = "JUMP_DOWN"
+    NYAN = "NYAN"
+    POWER_UP = "POWER_UP"
+    POWER_DOWN = "POWER_DOWN"
+    PYTHON = "PYTHON"
+    RINGTONE = "RINGTONE"
+    WAWAWAWAA = "WAWAWAWAA"
+    WEDDING = "WEDDING"
+
     def __init__(self, simulator: MicrobitSimulator):
         self.sim = simulator
 

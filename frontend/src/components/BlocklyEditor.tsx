@@ -43,6 +43,7 @@ const TOOLBOX_XML = `
     <block type="mb_mostrar_texto"/>
     <block type="mb_pausa"/>
     <block type="mb_limpiar"/>
+    <block type="mb_pixel"/>
   </category>
   <category name="Control" colour="#C70039">
     <block type="controls_whileUntil">
@@ -60,6 +61,10 @@ const TOOLBOX_XML = `
   </category>
   <category name="Botones" colour="#008000">
     <block type="mb_button_pressed"/>
+    <block type="mb_button_was_pressed"/>
+  </category>
+  <category name="Sonido" colour="#CF63CF">
+    <block type="mb_melodia"/>
   </category>
   <category name="Sensores" colour="#FF9800">
     <block type="mb_temperatura"/>
@@ -142,6 +147,51 @@ const MICROBIT_BLOCKS = [
     tooltip: 'Apaga todos los LEDs',
   },
   {
+    type: 'mb_pixel',
+    message0: 'encender píxel x %1 y %2 brillo %3',
+    args0: [
+      { type: 'field_number', name: 'X', value: 2, min: 0, max: 4, precision: 1 },
+      { type: 'field_number', name: 'Y', value: 2, min: 0, max: 4, precision: 1 },
+      { type: 'field_number', name: 'BRIGHTNESS', value: 9, min: 0, max: 9, precision: 1 },
+    ],
+    previousStatement: null,
+    nextStatement: null,
+    colour: 160,
+    tooltip: 'Enciende (o apaga con brillo 0) un LED concreto de la matriz',
+  },
+  {
+    type: 'mb_melodia',
+    message0: 'reproducir melodía %1',
+    args0: [
+      {
+        type: 'field_dropdown',
+        name: 'TUNE',
+        options: [
+          ['cumpleaños', 'BIRTHDAY'],
+          ['boda', 'WEDDING'],
+          ['funeral', 'FUNERAL'],
+          ['persecución', 'CHASE'],
+          ['villano', 'BADDY'],
+          ['nyan cat', 'NYAN'],
+          ['encender', 'POWER_UP'],
+          ['apagar', 'POWER_DOWN'],
+          ['salto', 'JUMP_UP'],
+          ['caída', 'JUMP_DOWN'],
+          ['tono de llamada', 'RINGTONE'],
+          ['blues', 'BLUES'],
+          ['funk', 'FUNK'],
+          ['pitido gracioso', 'WAWAWAWAA'],
+          ['pianista', 'ENTERTAINER'],
+          ['python', 'PYTHON'],
+        ],
+      },
+    ],
+    previousStatement: null,
+    nextStatement: null,
+    colour: 290,
+    tooltip: 'Reproduce una melodía predefinida por el altavoz',
+  },
+  {
     type: 'mb_button_pressed',
     message0: '¿botón %1 pulsado?',
     args0: [
@@ -154,6 +204,21 @@ const MICROBIT_BLOCKS = [
     output: 'Boolean',
     colour: 40,
     tooltip: 'Comprueba si se está pulsando un botón',
+  },
+  {
+    type: 'mb_button_was_pressed',
+    message0: '¿se ha pulsado el botón %1?',
+    args0: [
+      {
+        type: 'field_dropdown',
+        name: 'BTN',
+        options: [['A', 'A'], ['B', 'B']],
+      },
+    ],
+    output: 'Boolean',
+    colour: 40,
+    tooltip:
+      'Verdadero solo una vez por cada pulsación (a diferencia de "¿pulsado?", que vale mientras se mantiene apretado)',
   },
   {
     type: 'mb_temperatura',
@@ -213,9 +278,26 @@ pythonGenerator.forBlock['mb_pausa'] = (block: Blockly.Block) => {
 
 pythonGenerator.forBlock['mb_limpiar'] = () => `display.clear()\n`
 
+pythonGenerator.forBlock['mb_pixel'] = (block: Blockly.Block) => {
+  const x = block.getFieldValue('X')
+  const y = block.getFieldValue('Y')
+  const brightness = block.getFieldValue('BRIGHTNESS')
+  return `display.set_pixel(${x}, ${y}, ${brightness})\n`
+}
+
+pythonGenerator.forBlock['mb_melodia'] = (block: Blockly.Block) => {
+  const tune = block.getFieldValue('TUNE')
+  return `music.play(music.${tune})\n`
+}
+
 pythonGenerator.forBlock['mb_button_pressed'] = (block: Blockly.Block) => {
   const btn = String(block.getFieldValue('BTN')).toLowerCase()
   return [`button_${btn}.is_pressed()`, Order.ATOMIC]
+}
+
+pythonGenerator.forBlock['mb_button_was_pressed'] = (block: Blockly.Block) => {
+  const btn = String(block.getFieldValue('BTN')).toLowerCase()
+  return [`button_${btn}.was_pressed()`, Order.ATOMIC]
 }
 
 pythonGenerator.forBlock['mb_temperatura'] = () => ['temperature()', Order.ATOMIC]
@@ -234,7 +316,14 @@ pythonGenerator.forBlock['mb_shake'] = () => [
 
 function buildCode(workspace: Blockly.Workspace): string {
   const body = pythonGenerator.workspaceToCode(workspace).replace(/\s+$/, '')
-  return body ? `from microbit import *\n\n${body}\n` : ''
+  if (!body) return ''
+  /* `music` no forma parte de `from microbit import *`: en el simulador ya
+     está disponible sin importarlo, pero en hardware real hace falta el
+     import para que el código exportado funcione igual. */
+  const imports = /\bmusic\./.test(body)
+    ? 'from microbit import *\nimport music\n\n'
+    : 'from microbit import *\n\n'
+  return `${imports}${body}\n`
 }
 
 interface BlocklyEditorProps {
