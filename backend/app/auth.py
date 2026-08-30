@@ -187,6 +187,66 @@ def user_from_request(request: Request) -> dict[str, Any] | None:
     return verify_session(request.cookies.get(settings.session_cookie_name))
 
 
+# ==================== IDENTIDAD ANÓNIMA (SSO desactivado) ====================
+#
+# Sin Authentik cada alumno navega sin usuario autenticado. Antes de esto
+# `_owner_id()` daba a todo el mundo el mismo id fijo ("local-dev"), así que
+# cualquiera podía ver, resetear o borrar la sesión del simulador de
+# cualquier otro alumno. Esta cookie firmada da a cada navegador un id
+# aleatorio estable, sin necesidad de login, solo para aislar sesiones.
+
+ANON_COOKIE_NAME = "edutictac_anon_id"
+ANON_COOKIE_MAX_AGE = 30 * 24 * 3600
+
+
+def _sign_anon_id(anon_id: str) -> str:
+    signature = hmac.new(
+        settings.session_secret.encode(), anon_id.encode(), hashlib.sha256
+    ).digest()
+    return f"{anon_id}.{_base64url_encode(signature)}"
+
+
+def _verify_anon_id(value: str | None) -> str | None:
+    if not value:
+        return None
+    try:
+        anon_id, signature = value.split(".", 1)
+        expected = hmac.new(
+            settings.session_secret.encode(), anon_id.encode(), hashlib.sha256
+        ).digest()
+        if not hmac.compare_digest(expected, _base64url_decode(signature)):
+            return None
+        return anon_id
+    except (ValueError, TypeError):
+        return None
+
+
+def ensure_anon_id(request: Request) -> tuple[str, str | None]:
+    """Devuelve (anon_id, valor_de_cookie_a_fijar).
+
+    El segundo elemento es None cuando la cookie ya era válida y no hace
+    falta reescribirla.
+    """
+    existing = _verify_anon_id(request.cookies.get(ANON_COOKIE_NAME))
+    if existing:
+        return existing, None
+    anon_id = secrets.token_urlsafe(16)
+    return anon_id, _sign_anon_id(anon_id)
+
+
+def owner_id_from_cookies(cookies: dict[str, str]) -> str | None:
+    """Resuelve el owner_id (usuario autenticado o id anónimo) a partir de
+    unas cookies ya recibidas, sin poder fijar ninguna nueva. Pensado para
+    el endpoint de WebSocket, donde no hay una respuesta HTTP normal en la
+    que apoyar el middleware de `main.py`; la cookie anónima ya debe existir
+    porque la sesión del simulador se crea siempre antes por HTTP.
+    """
+    user = verify_session(cookies.get(settings.session_cookie_name))
+    if user:
+        return str(user["id"])
+    return _verify_anon_id(cookies.get(ANON_COOKIE_NAME))
+
+
 def _require_oidc() -> None:
     if not settings.enabled:
         raise HTTPException(

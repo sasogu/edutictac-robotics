@@ -34,7 +34,14 @@ from dotenv import load_dotenv
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 from .routers import chat, lessons, simulator, code, export, system, websocket
-from .auth import router as auth_router, settings as auth_settings, user_from_request
+from .auth import (
+    ANON_COOKIE_MAX_AGE,
+    ANON_COOKIE_NAME,
+    ensure_anon_id,
+    router as auth_router,
+    settings as auth_settings,
+    user_from_request,
+)
 from .services import ollama_service, lesson_engine
 from .services.metrics_service import metrics
 from .simulator import simulator_manager
@@ -98,11 +105,31 @@ async def require_application_session(request: Request, call_next):
         metrics.record_request(path, response.status_code)
         return response
 
+    # Sin Authentik no hay usuario autenticado que distinga a un alumno de
+    # otro. Se asigna un id anónimo estable por navegador para que las
+    # sesiones del simulador (ver `_owner_id` en routers/simulator.py) no
+    # queden todas bajo el mismo id compartido.
+    anon_cookie_value: str | None = None
+    if not auth_settings.enabled and path.startswith("/api/") and not is_public:
+        anon_id, anon_cookie_value = ensure_anon_id(request)
+        request.state.anon_id = anon_id
+
     try:
         response = await call_next(request)
     except Exception:
         metrics.record_request(path, 500)
         raise
+
+    if anon_cookie_value:
+        response.set_cookie(
+            ANON_COOKIE_NAME,
+            anon_cookie_value,
+            max_age=ANON_COOKIE_MAX_AGE,
+            httponly=True,
+            secure=auth_settings.secure_cookies,
+            samesite="lax",
+            path="/",
+        )
 
     route = request.scope.get("route")
     endpoint = getattr(route, "path", path)

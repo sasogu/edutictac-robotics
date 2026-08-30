@@ -103,7 +103,14 @@ class SensorUpdateRequest(BaseModel):
 
 def _owner_id(request: Request) -> str:
     user = user_from_request(request)
-    return str(user["id"]) if user else "local-dev"
+    if user:
+        return str(user["id"])
+    # Sin Authentik, el middleware de main.py asigna un id anónimo por
+    # navegador (cookie firmada) para que cada alumno tenga sus propias
+    # sesiones. "local-dev" solo se usa si algo llama a este endpoint sin
+    # pasar por ese middleware (p. ej. una llamada interna en tests).
+    anon_id = getattr(request.state, "anon_id", None)
+    return anon_id or "local-dev"
 
 
 def _create_session_response(

@@ -42,6 +42,14 @@ SESSION_COOKIE_NAME=edutictac_robotics_session
 When Authentik is ready, configure the issuer and client values for the
 EduTicTac application and set `AUTHENTIK_ENABLED=true`.
 
+With `AUTHENTIK_ENABLED=false`, each browser still gets its own isolated
+simulator sessions: an anonymous id is assigned via a signed
+`edutictac_anon_id` cookie (see `ensure_anon_id` in `app/auth.py`), so
+students without login cannot see or modify each other's sessions. This is
+not real authentication — anyone can clear cookies and start over anonymously
+— so enabling Authentik is still the recommended setup before real classroom
+use, mainly to have actual accountability per student, not just isolation.
+
 ## Systemd service example
 
 ```ini

@@ -39,7 +39,7 @@ async def websocket_endpoint(websocket: WebSocket, session_id: str):
         await websocket.close(code=4401, reason="Authentication required")
         return
 
-    owner_id = str(user["id"]) if user else "local-dev"
+    owner_id = auth.owner_id_from_cookies(websocket.cookies) or "local-dev"
     if simulator_manager.get_session(session_id, owner_id) is None:
         await websocket.close(code=4404, reason="Session not found")
         return
