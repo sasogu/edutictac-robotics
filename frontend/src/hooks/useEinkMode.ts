@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 
 export const useEinkMode = () => {
   const [eink, setEink] = useState<boolean>(() => {
-    return localStorage.getItem('edumind-eink') === 'true'
+    return localStorage.getItem('edutictac-eink') === 'true'
   })
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export const useEinkMode = () => {
     } else {
       html.classList.remove('eink')
     }
-    localStorage.setItem('edumind-eink', String(eink))
+    localStorage.setItem('edutictac-eink', String(eink))
   }, [eink])
 
   return { eink, setEink }

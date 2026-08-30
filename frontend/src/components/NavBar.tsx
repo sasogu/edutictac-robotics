@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * NavBar persistente — navegación, estado IA y toggle e-ink
@@ -38,7 +39,7 @@ const NavBar: React.FC<NavBarProps> = ({ currentView, onNavigate, isAiReady, isS
         <button
           className="edm-navbar__brand"
           onClick={() => { onNavigate('home'); setMenuOpen(false) }}
-          aria-label="EDUmind Robotics — Inicio"
+          aria-label="EduTicTac Robotics — Inicio"
         >
           <span className="edm-navbar__logo-icon">⚙</span>
           <span className="edm-navbar__logo-text">

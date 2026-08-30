@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,7 +33,7 @@ export interface Achievement {
     category: 'code' | 'explore' | 'master'
 }
 
-const ACHIEVEMENTS_KEY = 'edumind_robotics_achievements'
+const ACHIEVEMENTS_KEY = 'edutictac_robotics_achievements'
 
 // Define all achievements
 const ALL_ACHIEVEMENTS: Omit<Achievement, 'unlocked' | 'unlockedAt'>[] = [

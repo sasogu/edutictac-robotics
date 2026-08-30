@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +22,7 @@ import './ThemeToggle.css'
 
 type Theme = 'dark' | 'light'
 
-const THEME_KEY = 'edumind_robotics_theme'
+const THEME_KEY = 'edutictac_robotics_theme'
 
 const ThemeToggle: React.FC = () => {
     const [theme, setTheme] = useState<Theme>(() => {

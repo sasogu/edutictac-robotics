@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+# Copyright (C) 2026 EduTicTac
 # Author: Luis Vilela Acuña
 #
 # This program is free software: you can redistribute it and/or modify
@@ -53,7 +54,7 @@ class OllamaService:
 
         self.base_url = base_url
         self.default_model = default_model or os.getenv("OLLAMA_MODEL", "phi3:latest")
-        self.allow_remote = _env_bool("EDUMIND_ALLOW_REMOTE_AI", False)
+        self.allow_remote = _env_bool("EDUTICTAC_ALLOW_REMOTE_AI", False)
         self.num_predict = int(os.getenv("OLLAMA_NUM_PREDICT", "400"))
         self.keep_alive = os.getenv("OLLAMA_KEEP_ALIVE", "30m")
         self.client = httpx.AsyncClient(timeout=120.0)
@@ -126,7 +127,7 @@ class OllamaService:
             yield (
                 "IA local bloqueada por política privacy-first: el endpoint configurado "
                 "no parece local. Configura OLLAMA_BASE_URL en localhost o habilita "
-                "EDUMIND_ALLOW_REMOTE_AI=true solo con autorización explícita."
+                "EDUTICTAC_ALLOW_REMOTE_AI=true solo con autorización explícita."
             )
             return
 

@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+# Copyright (C) 2026 EduTicTac
 # Author: Luis Vilela Acuña
 #
 # This program is free software: you can redistribute it and/or modify
@@ -17,7 +18,7 @@
 #
 
 """
-EDUmind Robotics API
+EduTicTac Robotics API
 Sistema de aprendizaje de programación asistida por IA para micro:bit y Nezha
 """
 from fastapi import FastAPI, Request
@@ -48,7 +49,7 @@ logger = logging.getLogger(__name__)
 
 # Crear aplicación FastAPI
 app = FastAPI(
-    title="EDUmind Robotics API",
+    title="EduTicTac Robotics API",
     version="1.0.0",
     description="API para aprendizaje de robótica educativa con IA local (micro:bit + Nezha)",
     docs_url="/api/docs",
@@ -58,7 +59,7 @@ app = FastAPI(
 # CORS - permitir peticiones desde el frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://robotics.edumind.es"],
+    allow_origins=["https://robotics.edutictac.es"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -210,7 +211,7 @@ async def get_prometheus_metrics():
 @app.on_event("startup")
 async def startup_event():
     """Evento de inicio de la aplicación"""
-    logger.info("🚀 Starting EDUmind Robotics API...")
+    logger.info("🚀 Starting EduTicTac Robotics API...")
 
     # Verificar Ollama
     ollama_ok = await ollama_service.check_health()
@@ -226,13 +227,13 @@ async def startup_event():
     challenges_count = len(lesson_engine.get_challenges())
     logger.info(f"📚 Loaded {lessons_count} lessons and {challenges_count} challenges")
 
-    logger.info("✅ EDUmind Robotics API is ready!")
+    logger.info("✅ EduTicTac Robotics API is ready!")
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
     """Evento de cierre de la aplicación"""
-    logger.info("👋 Shutting down EDUmind Robotics API...")
+    logger.info("👋 Shutting down EduTicTac Robotics API...")
     await ollama_service.close()
     logger.info("✅ Cleanup complete")
 
@@ -242,7 +243,7 @@ async def shutdown_event():
 async def root():
     """Endpoint raíz con información de la API"""
     return {
-        "name": "EDUmind Robotics API",
+        "name": "EduTicTac Robotics API",
         "version": "1.0.0",
         "description": "API para aprendizaje de robótica educativa con IA",
         "docs": "/api/docs",

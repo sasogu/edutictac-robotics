@@ -15,7 +15,7 @@ sleep(500)
 display.clear()
 `
 
-export const mockEdumindApi = async (page: Page) => {
+export const mockEdutictacApi = async (page: Page) => {
   await page.addInitScript(() => {
     localStorage.clear()
   })

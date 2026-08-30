@@ -1,7 +1,7 @@
 {
-  "name": "EDUmind Robotics Guide",
-  "short_name": "EDUmind",
-  "description": "Guía educativa interactiva para proyectos de robótica EDUmind.",
+  "name": "EduTicTac Robotics Guide",
+  "short_name": "EduTicTac",
+  "description": "Guía educativa interactiva para proyectos de robótica EduTicTac.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",

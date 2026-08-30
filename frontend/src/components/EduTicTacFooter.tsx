@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,14 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import './EDUmindFooter.css';
+import './EduTicTacFooter.css';
 
 interface NavigationLink {
     href: string;
     label?: string;
 }
 
-interface EDUmindFooterProps {
+interface EduTicTacFooterProps {
     appName: string;
     version: string;
     versionStage?: 'Alpha' | 'Beta' | 'Stable' | 'RC';
@@ -52,27 +53,27 @@ const translations: Record<string, FooterTranslations> = {
     es: {
         previous: '← Anterior',
         next: 'Siguiente →',
-        copyright: '© {year} EDUmind por',
+        copyright: '© {year} EduTicTac por',
         feedback: '📋 Reportar Error',
         home: '🏠 Inicio'
     },
     en: {
         previous: '← Previous',
         next: 'Next →',
-        copyright: '© {year} EDUmind by',
+        copyright: '© {year} EduTicTac by',
         feedback: '📋 Report Issue',
         home: '🏠 Home'
     },
     zh: {
         previous: '← 上一页',
         next: '下一页 →',
-        copyright: '© {year} EDUmind 由',
+        copyright: '© {year} EduTicTac 由',
         feedback: '📋 报告问题',
         home: '🏠 首页'
     }
 };
 
-export default function EDUmindFooter({
+export default function EduTicTacFooter({
     appName,
     version,
     versionStage,
@@ -87,7 +88,7 @@ export default function EDUmindFooter({
     locale = 'es',
     hideNavigation = false,
     showVersion = true
-}: EDUmindFooterProps) {
+}: EduTicTacFooterProps) {
     const t = translations[locale] || translations.es;
 
     const versionBadge = versionStage
@@ -95,7 +96,7 @@ export default function EDUmindFooter({
         : `v${version}`;
 
     return (
-        <footer className={`edumind-footer ${className}`}>
+        <footer className={`edutictac-footer ${className}`}>
             {!hideNavigation && (previousPage || nextPage || homeHref) && (
                 <div className="footer-nav">
                     {previousPage && (
@@ -135,7 +136,7 @@ export default function EDUmindFooter({
                     <a href="https://eupl.eu/1.2/es/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>EUPL-1.2</a>
                     <span style={{ margin: '0 0.5rem' }}>·</span>
                     <a href="https://github.com/edumind-es/edumind-robotics" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>
-                        Código fuente en GitHub
+                        Derivado de EDUmind Robotics Lab
                     </a>
                 </p>
             </div>
@@ -146,23 +147,23 @@ export default function EDUmindFooter({
                 fontSize: '0.875rem',
                 color: '#6b7280'
             }}>
-                <a href="https://edumind.es/es/legal/privacidad" target="_blank" rel="noopener noreferrer" style={{
+                <a href="https://edutictac.es/es/legal/privacidad" target="_blank" rel="noopener noreferrer" style={{
                     color: 'inherit',
                     textDecoration: 'none',
                     transition: 'color 0.2s'
                 }}>Privacidad</a>
                 <span style={{ margin: '0 0.5rem' }}>·</span>
-                <a href="https://edumind.es/es/legal" target="_blank" rel="noopener noreferrer" style={{
+                <a href="https://edutictac.es/es/legal" target="_blank" rel="noopener noreferrer" style={{
                     color: 'inherit',
                     textDecoration: 'none'
                 }}>Aviso Legal</a>
                 <span style={{ margin: '0 0.5rem' }}>·</span>
-                <a href="https://edumind.es/es/legal/cookies" target="_blank" rel="noopener noreferrer" style={{
+                <a href="https://edutictac.es/es/legal/cookies" target="_blank" rel="noopener noreferrer" style={{
                     color: 'inherit',
                     textDecoration: 'none'
                 }}>Cookies</a>
                 <span style={{ margin: '0 0.5rem' }}>·</span>
-                <a href="https://edumind.es/es/legal/ia" target="_blank" rel="noopener noreferrer" style={{
+                <a href="https://edutictac.es/es/legal/ia" target="_blank" rel="noopener noreferrer" style={{
                     color: 'inherit',
                     textDecoration: 'none'
                 }}>Política de IA</a>
@@ -172,18 +173,18 @@ export default function EDUmindFooter({
                     textDecoration: 'none'
                 }}>Proponer Deporte</a>
                 <span style={{ margin: '0 0.5rem' }}>·</span>
-                <a href="https://donar.edumind.es" target="_blank" rel="noopener noreferrer" style={{
+                <a href="https://donar.edutictac.es" target="_blank" rel="noopener noreferrer" style={{
                     color: '#10b981',
                     textDecoration: 'none',
                     fontWeight: '500'
                 }}>💚 Apoyar</a>
 
                 <div style={{ marginTop: '0.5rem', display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                    <a href="https://t.me/EDUmind_es" target="_blank" rel="noopener noreferrer" style={{ color: '#0088cc', textDecoration: 'none' }}>📢 Telegram</a>
-                    <a href="https://instagram.com/edumind_es" target="_blank" rel="noopener noreferrer" style={{ color: '#E1306C', textDecoration: 'none' }}>📸 Instagram</a>
-                    <a href="https://x.com/edumind_es" target="_blank" rel="noopener noreferrer" style={{ color: '#000000', textDecoration: 'none' }}>𝕏 Twitter</a>
-                    <a href="https://mastodon.social/@EDUmind" target="_blank" rel="noopener noreferrer" style={{ color: '#6364FF', textDecoration: 'none' }}>🐘 Mastodon</a>
-                    <a href="https://blog.edumind.es" target="_blank" rel="noopener noreferrer" style={{ color: '#10b981', textDecoration: 'none' }}>📝 Blog</a>
+                    <a href="https://t.me/EduTicTac_es" target="_blank" rel="noopener noreferrer" style={{ color: '#0088cc', textDecoration: 'none' }}>📢 Telegram</a>
+                    <a href="https://instagram.com/edutictac_es" target="_blank" rel="noopener noreferrer" style={{ color: '#E1306C', textDecoration: 'none' }}>📸 Instagram</a>
+                    <a href="https://x.com/edutictac_es" target="_blank" rel="noopener noreferrer" style={{ color: '#000000', textDecoration: 'none' }}>𝕏 Twitter</a>
+                    <a href="https://mastodon.social/@EduTicTac" target="_blank" rel="noopener noreferrer" style={{ color: '#6364FF', textDecoration: 'none' }}>🐘 Mastodon</a>
+                    <a href="https://blog.edutictac.es" target="_blank" rel="noopener noreferrer" style={{ color: '#10b981', textDecoration: 'none' }}>📝 Blog</a>
                 </div>
             </div>
 

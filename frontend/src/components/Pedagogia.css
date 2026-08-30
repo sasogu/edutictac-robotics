@@ -1,10 +1,10 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
- * Estilos del espacio pedagógico. Se apoya en los tokens de la Lámina EDUmind
- * (vendorizada en /vendor/lamina-v1.css) con alternativa propia por si la hoja
- * no estuviera cargada.
+ * Estilos del espacio pedagógico. Se apoya en los tokens de EduTicTac con
+ * alternativas locales por si la hoja principal no estuviera cargada.
  */
 
 .pedagogia__section {

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +20,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import './styles/edumind-theme.css'
+import './styles/edutictac-theme.css'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(

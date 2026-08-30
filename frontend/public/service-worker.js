@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const CACHE_NAME = 'edumind-robotics-cache-v2';
+const CACHE_NAME = 'edutictac-robotics-cache-v2';
 const CORE_ASSETS = [
   '/',
   '/index.html',

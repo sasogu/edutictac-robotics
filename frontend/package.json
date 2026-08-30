@@ -1,8 +1,11 @@
 {
-  "name": "frontend",
+  "name": "edutictac-robotics-frontend",
   "private": true,
   "version": "0.0.0",
-  "author": "Luis Vilela Acuña <contacto@edumind.es>",
+  "author": "EduTicTac <contacto@edutictac.es>",
+  "contributors": [
+    "Luis Vilela Acuña <contacto@edumind.es> (autor del proyecto original EDUmind Robotics Lab)"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,7 +17,6 @@
     "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
-    "@edumind/footer": "github:edumind-es/edumind-footer",
     "@monaco-editor/react": "^4.7.0",
     "axios": "^1.13.2",
     "monaco-editor": "^0.56.0",

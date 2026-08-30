@@ -1,23 +1,27 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
- * Sistema de diseño EDUmind — Lámina adoptada.
+ * Sistema de diseño EduTicTac Robotics.
  *
- * Antes esto era un tema oscuro con neón cian sobre azul marino: la estética
- * genérica de panel de IA. Ahora consume los tokens reales de la Lámina
- * (/vendor/lamina-v1.css): papel cálido, tinta y los Cinco Mundos.
- *
- * El lenguaje visual es el de una lámina escolar impresa — contorno de tinta,
- * sombra desplazada como una ficha de cartulina, colores de mundo como
- * marcadores de capítulo. Es amable para un niño sin caer en lo infantiloide,
- * y no se parece a ninguna app de IA.
- *
- * Los nombres --edm-* se mantienen para no reescribir los 20 CSS de componente:
- * aquí es donde se traducen a la Lámina.
+ * Los nombres --edm-* se mantienen para no reescribir los CSS de componente.
+ * La paleta evita depender de la identidad visual upstream.
  */
 
 :root {
+  --ett-coral: #d85f45;
+  --ett-amber: #d99a24;
+  --ett-green: #4f8f45;
+  --ett-blue: #357b9a;
+  --ett-teal: #28656d;
+  --ett-paper: #e9e6dd;
+  --ett-paper-2: #f0ede5;
+  --ett-ink: #1c1a16;
+  --ett-ink-2: #4f4a41;
+  --ett-ink-3: #8a8377;
+  --ett-rule: #c7c0b1;
+
   /* Tipografía de la Lámina. Bricolage tiene carácter para los títulos;
      Poppins es redonda y muy legible para lectores jóvenes. */
   --edm-font-head: var(--lm-display, 'Bricolage Grotesque', 'Outfit', sans-serif);
@@ -60,6 +64,25 @@
   --edm-radius-sm:   6px;
 
   --edm-bg: var(--lm-paper, #e9e6dd);
+}
+
+.ett-plate-top {
+  display: flex;
+  height: 14px;
+}
+
+.ett-plate-top i {
+  flex: 1;
+}
+
+.ett-plate-top i:nth-child(1) { background: var(--ett-coral); }
+.ett-plate-top i:nth-child(2) { background: var(--ett-amber); }
+.ett-plate-top i:nth-child(3) { background: var(--ett-green); }
+.ett-plate-top i:nth-child(4) { background: var(--ett-blue); }
+.ett-plate-top i:nth-child(5) { background: var(--ett-teal); }
+
+.ett-plate-top--compact {
+  height: 7px;
 }
 
 /* ─── Reset base ─── */

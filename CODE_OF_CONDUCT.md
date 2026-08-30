@@ -2,7 +2,7 @@
 
 ## Nuestro compromiso
 
-EDUmind es un proyecto educativo. Quien participa aquí —programando, probando, traduciendo, documentando o simplemente contando cómo le funciona en su aula— merece un trato respetuoso, con independencia de su edad, experiencia técnica, discapacidad, aspecto, identidad de género, nacionalidad, lengua, religión u orientación sexual.
+EduTicTac es un proyecto educativo. Quien participa aquí —programando, probando, traduciendo, documentando o simplemente contando cómo le funciona en su aula— merece un trato respetuoso, con independencia de su edad, experiencia técnica, discapacidad, aspecto, identidad de género, nacionalidad, lengua, religión u orientación sexual.
 
 Nos comprometemos a que participar sea una experiencia libre de acoso para todo el mundo.
 
@@ -26,7 +26,7 @@ Se aplica en todos los espacios del proyecto (repositorio, issues, PRs, discusio
 
 ## Cómo avisar
 
-Escribe a **contacto@edumind.es**. Los avisos se revisan y responden de forma confidencial. Quien informa nunca queda expuesto.
+Escribe a **contacto@edutictac.es**. Los avisos se revisan y responden de forma confidencial. Quien informa nunca queda expuesto.
 
 ## Consecuencias
 

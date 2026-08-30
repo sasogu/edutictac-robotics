@@ -1,4 +1,4 @@
-# Cómo colaborar en EDUmind Robotics
+# Cómo colaborar en EduTicTac Robotics
 
 Gracias por acercarte. Este proyecto nace en un aula de Educación Física y crece con la gente que lo usa.
 
@@ -52,14 +52,14 @@ Nunca subas datos reales de alumnado, ni siquiera como fixture. Usa nombres inve
 
 Ni claves, ni tokens, ni contraseñas, ni ficheros `.env`, ni volcados de base de datos. Si necesitas una variable nueva, añádela a `.env.example` con un valor de ejemplo y documenta para qué sirve.
 
-Si crees que has subido un secreto por error, **no abras un issue público**: escribe a contacto@edumind.es. Ver [SECURITY.md](SECURITY.md).
+Si crees que has subido un secreto por error, **no abras un issue público**: escribe a contacto@edutictac.es. Ver [SECURITY.md](SECURITY.md).
 
 ## Licencia de lo que aportas
 
 Al enviar un PR aceptas que tu contribución se publique bajo la licencia doble del proyecto, **AGPL-3.0-or-later** *o* **EUPL-1.2** (ver [LICENSE](LICENSE)).
 
-La marca EDUmind® y sus logotipos no se ceden con el código: ver [TRADEMARKS.md](TRADEMARKS.md).
+La marca EduTicTac® y sus logotipos no se ceden con el código: ver [TRADEMARKS.md](TRADEMARKS.md).
 
 ## Dudas
 
-Abre un issue o escribe a contacto@edumind.es. No hay pregunta demasiado básica.
+Abre un issue o escribe a contacto@edutictac.es. No hay pregunta demasiado básica.

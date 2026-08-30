@@ -1,4 +1,4 @@
-# EDUmind Robotics Lab
+# EduTicTac Robotics Lab
 
 Plataforma de robótica educativa: el alumnado programa y simula robots desde el navegador, sin necesidad de hardware. Backend en FastAPI, frontend en React y flujos de aprendizaje asistidos por IA que corre en local.
 
@@ -40,10 +40,15 @@ Se puede colaborar **sin programar**: contar cómo te ha ido en clase, reportar 
 
 Este repositorio es una *release saneada* para revisión y auditoría: no incluye secretos, configuración de despliegue ni datos de aula. Ver [OPEN_SOURCE_RELEASE.md](OPEN_SOURCE_RELEASE.md).
 
+## Origen del proyecto
+
+Este proyecto deriva de **EDUmind Robotics Lab**:
+https://github.com/edumind-es/edumind-robotics
+
+El código original se publicó bajo licencia doble **AGPL-3.0-or-later OR EUPL-1.2**. La marca EDUmind, sus logos y su identidad visual no forman parte de la licencia de software; este fork usa identidad propia de EduTicTac.
+
 ## Licencia
 
 Licencia doble **AGPL-3.0-or-later** *o* **EUPL-1.2**, a elección de quien la reutilice. Ver [LICENSE](LICENSE) y [NOTICE](NOTICE).
 
-EDUmind® es marca registrada en España (OEPM). El código es libre; la marca y los logotipos no se ceden con él — ver [TRADEMARKS.md](TRADEMARKS.md).
-
-Por **Luis Vilela Acuña** — maestro de Educación Física.
+El código es libre; las marcas, logotipos e identidades visuales se tratan por separado. Ver [TRADEMARKS.md](TRADEMARKS.md).

@@ -29,5 +29,5 @@ body:
     id: mundo
     attributes:
       label: Con qué Mundo se relaciona
-      description: El marco pedagógico de EDUmind. Si no lo tienes claro, deja "No lo sé".
+      description: El marco pedagógico de EduTicTac. Si no lo tienes claro, deja "No lo sé".
       options: ["No lo sé", "Físico", "Mental", "Emocional", "Social", "Interior", "Ninguno / es técnico"]

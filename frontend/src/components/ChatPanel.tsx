@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * This program is free software: you can redistribute it and/or modify
@@ -128,7 +129,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
     <div className="lme-card chat-panel-container">
       <div className="chat-header">
         <div className="lme-card__badge">Asistente IA</div>
-        <h3>Tutor EDUmind</h3>
+        <h3>Tutor EduTicTac</h3>
         <div className="ai-status">
           <span className={`status-indicator ${isStreaming ? 'thinking' : 'ready'}`}></span>
           <span className="status-label">{isStreaming ? 'Pensando...' : 'Listo'}</span>

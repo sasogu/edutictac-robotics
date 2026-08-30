@@ -1,20 +1,20 @@
 import { expect, test } from '@playwright/test'
-import { mockEdumindApi } from './fixtures'
+import { mockEdutictacApi } from './fixtures'
 
 test.use({ serviceWorkers: 'block' })
 
 test.beforeEach(async ({ page }) => {
-  await mockEdumindApi(page)
+  await mockEdutictacApi(page)
 })
 
 test('flujo alumno: pide ayuda a la IA local, inserta codigo y lo ejecuta en el simulador', async ({ page }) => {
   await page.goto('/')
 
-  await expect(page.getByRole('heading', { name: 'EDUmind Robotics Lab' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'EduTicTac Robotics Lab' })).toBeVisible()
   await page.getByRole('button', { name: /Abrir Laboratorio/ }).click()
 
   await expect(page.getByText(/IA local y privacidad/)).toBeVisible()
-  await expect(page.getByRole('heading', { name: /Tutor EDUmind/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Tutor EduTicTac/ })).toBeVisible()
 
   await page.getByPlaceholder(/Escribe tu pregunta o solicitud/).fill('Genera un corazon para micro:bit')
   await page.getByPlaceholder(/Escribe tu pregunta o solicitud/).press('Enter')

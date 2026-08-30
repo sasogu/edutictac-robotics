@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+# Copyright (C) 2026 EduTicTac
 # Author: Luis Vilela Acuña
 #
 # This program is free software: you can redistribute it and/or modify
@@ -36,7 +37,7 @@ class LoopGuardTransformer(ast.NodeTransformer):
     def _guard() -> ast.Expr:
         return ast.Expr(
             value=ast.Call(
-                func=ast.Name(id="__edumind_tick", ctx=ast.Load()),
+                func=ast.Name(id="__edutictac_tick", ctx=ast.Load()),
                 args=[],
                 keywords=[],
             )
@@ -407,7 +408,7 @@ class CodeExecutor:
             "Nezha": lambda: self.nezha_api,
             # Clases
             "Image": MicrobitImage,
-            "__edumind_tick": guard_iteration,
+            "__edutictac_tick": guard_iteration,
         }
 
         try:
@@ -421,7 +422,7 @@ class CodeExecutor:
             tree = ast.parse(processed_code, mode="exec")
             tree = LoopGuardTransformer().visit(tree)
             ast.fix_missing_locations(tree)
-            exec(compile(tree, "<edumind-simulator>", "exec"), safe_globals, {})
+            exec(compile(tree, "<edutictac-simulator>", "exec"), safe_globals, {})
 
             return {
                 "success": True,
@@ -480,7 +481,7 @@ class CodeExecutor:
             elif stripped == "while True:":
                 indent = line[:len(line) - len(line.lstrip())]
                 processed_lines.append(
-                    f"{indent}for __edumind_loop_{loop_index} in range({max_iterations}):"
+                    f"{indent}for __edutictac_loop_{loop_index} in range({max_iterations}):"
                 )
                 loop_index += 1
             else:

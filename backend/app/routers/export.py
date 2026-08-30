@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+# Copyright (C) 2026 EduTicTac
 # Author: Luis Vilela Acuña
 #
 # This program is free software: you can redistribute it and/or modify
@@ -38,7 +39,7 @@ router = APIRouter(
 
 class ExportRequest(BaseModel):
     code: str = Field(..., max_length=50_000)
-    project_name: Optional[str] = Field(default="EDUmind_Project", max_length=100)
+    project_name: Optional[str] = Field(default="EduTicTac_Project", max_length=100)
 
 
 class HardwareBundleRequest(ExportRequest):

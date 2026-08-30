@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * Pedagogía — el porqué de la app: IA local, comprensión frente a copia,
@@ -22,7 +23,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     q: '¿Los datos de mis alumnos salen del centro?',
     a: (
       <>
-        No. El modelo se ejecuta en el servidor de EDUmind y las preguntas se
+        No. El modelo se ejecuta en el servidor de EduTicTac y las preguntas se
         procesan ahí mismo. No hay cuenta de OpenAI, ni de Google, ni de ningún
         tercero: no existe un contrato de encargado de tratamiento que firmar
         porque no hay nadie a quien ceder los datos. La app además rechaza por
@@ -126,7 +127,7 @@ const Pedagogia: React.FC<PedagogiaProps> = ({ aiModel, aiLocal, onStart }) => {
             {aiLocal ? (
               <>
                 Ahora mismo este laboratorio está pensando con{' '}
-                <strong>{aiModel}</strong> dentro del servidor de EDUmind.
+                <strong>{aiModel}</strong> dentro del servidor de EduTicTac.
               </>
             ) : (
               <>

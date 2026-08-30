@@ -1,5 +1,5 @@
 """
-Authentik OIDC integration for EDUmind Robotics.
+Authentik OIDC integration for EduTicTac Robotics.
 
 The browser only receives a signed, HttpOnly application session. OAuth tokens
 remain in the backend and are discarded after the identity has been verified.
@@ -72,7 +72,7 @@ class AuthSettings:
             client_secret=os.getenv("AUTHENTIK_CLIENT_SECRET") or None,
             scopes=os.getenv("AUTHENTIK_SCOPES", "openid profile email"),
             session_cookie_name=os.getenv(
-                "SESSION_COOKIE_NAME", "edumind_robotics_session"
+                "SESSION_COOKIE_NAME", "edutictac_robotics_session"
             ),
             session_secret=session_secret or "development-only-session-secret",
             session_max_age=int(os.getenv("SESSION_MAX_AGE_SECONDS", str(8 * 24 * 3600))),
@@ -191,7 +191,7 @@ def _require_oidc() -> None:
     if not settings.enabled:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="EDUmind SSO is not enabled in this environment",
+            detail="EduTicTac SSO is not enabled in this environment",
         )
 
 
@@ -204,7 +204,7 @@ async def _fetch_json(method: str, url: str, **kwargs: Any) -> dict[str, Any]:
     except (httpx.HTTPError, ValueError) as exc:
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
-            detail="The EDUmind identity provider could not be reached",
+            detail="The EduTicTac identity provider could not be reached",
         ) from exc
 
 
@@ -263,7 +263,7 @@ async def _validate_id_token(
     except (JWTError, KeyError) as exc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="The EDUmind identity response could not be verified",
+            detail="The EduTicTac identity response could not be verified",
         ) from exc
 
 
@@ -272,11 +272,11 @@ def _role_from_claims(claims: dict[str, Any]) -> str:
     if isinstance(groups, str):
         groups = [groups]
     priorities = (
-        ("edumind-admin", "admin"),
-        ("edumind-teacher-premium", "teacher-premium"),
-        ("edumind-teacher", "teacher"),
-        ("edumind-family", "family"),
-        ("edumind-student", "student"),
+        ("edutictac-admin", "admin"),
+        ("edutictac-teacher-premium", "teacher-premium"),
+        ("edutictac-teacher", "teacher"),
+        ("edutictac-family", "family"),
+        ("edutictac-student", "student"),
     )
     return next((role for group, role in priorities if group in groups), "user")
 

@@ -2,7 +2,7 @@
 
 ## Cómo informar de un fallo
 
-**No abras un issue público.** Escribe a **contacto@edumind.es** con el asunto `[Seguridad]`.
+**No abras un issue público.** Escribe a **contacto@edutictac.es** con el asunto `[Seguridad]`.
 
 También puedes usar el aviso privado de GitHub: pestaña **Security → Report a vulnerability** de este repositorio.
 

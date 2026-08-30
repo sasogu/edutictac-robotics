@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+# Copyright (C) 2026 EduTicTac
 # Author: Luis Vilela Acuña
 #
 # This program is free software: you can redistribute it and/or modify
@@ -31,7 +32,7 @@ router = APIRouter(prefix="/api/system", tags=["System"])
 async def get_policy():
     """Expone el modo local-first/privacy-first sin revelar secretos."""
     return {
-        "product": "EDUmind Robotics",
+        "product": "EduTicTac Robotics",
         "audience": "educational",
         "principles": [
             "offline-first where possible",

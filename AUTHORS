@@ -8,6 +8,12 @@ EDUmind Team <legal@edumind.es>
   - Desarrollo principal
   - Diseño y UX
 
+ADAPTACIÓN EDUTICTAC:
+
+EduTicTac <contacto@edutictac.es>
+  - Rebranding y adaptación como EduTicTac Robotics Lab
+  - Ajustes de despliegue y dominio (robotics.edutictac.es)
+
 CONTRIBUIDORES:
 
 [Lista de contribuidores]
@@ -16,6 +22,7 @@ CONTRIBUIDORES:
 
 NOTA LEGAL:
 Todos los contribuidores aceptan que sus aportaciones se licencien
-bajo GNU AGPL v3.0 y que EDUmind mantenga la gestión del proyecto.
+bajo GNU AGPL v3.0. El código original mantiene su autoría EDUmind / Los Mundos
+Edufis; las modificaciones de EduTicTac se licencian bajo las mismas licencias.
 El código es libre, pero la marca EDUmind y Los Mundos Edufis son
 propiedad de sus respectivos dueños.

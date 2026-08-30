@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,7 +35,7 @@ interface ProjectsPanelProps {
     onClose?: () => void
 }
 
-const STORAGE_KEY = 'edumind_robotics_projects'
+const STORAGE_KEY = 'edutictac_robotics_projects'
 
 const ProjectsPanel: React.FC<ProjectsPanelProps> = ({
     currentCode,
@@ -108,7 +109,7 @@ const ProjectsPanel: React.FC<ProjectsPanelProps> = ({
 
     const handleExportProjects = () => {
         const payload = {
-            type: 'edumind-robotics-projects',
+            type: 'edutictac-robotics-projects',
             version: 1,
             exportedAt: new Date().toISOString(),
             projects,
@@ -117,7 +118,7 @@ const ProjectsPanel: React.FC<ProjectsPanelProps> = ({
         const url = URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = url
-        link.download = `edumind-robotics-proyectos-${new Date().toISOString().slice(0, 10)}.json`
+        link.download = `edutictac-robotics-proyectos-${new Date().toISOString().slice(0, 10)}.json`
         link.click()
         URL.revokeObjectURL(url)
     }

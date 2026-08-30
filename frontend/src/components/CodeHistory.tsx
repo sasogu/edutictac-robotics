@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,7 +35,7 @@ interface CodeHistoryProps {
     onClose?: () => void
 }
 
-const HISTORY_KEY = 'edumind_robotics_history'
+const HISTORY_KEY = 'edutictac_robotics_history'
 const MAX_HISTORY = 20
 
 // Export para que otros componentes puedan añadir al historial

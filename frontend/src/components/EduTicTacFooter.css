@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,9 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* EDUmind Footer - Modern, Responsive, Dark Mode Compatible */
+/* EduTicTac Footer - Modern, Responsive, Dark Mode Compatible */
 
-.edumind-footer {
+.edutictac-footer {
     /* Layout */
     display: flex;
     justify-content: space-between;
@@ -39,7 +40,7 @@
 
 /* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
-    .edumind-footer {
+    .edutictac-footer {
         --footer-bg: var(--lm-ink);
         --footer-border: var(--lm-ink);
         --footer-text: #a0a0a0;
@@ -49,8 +50,8 @@
 }
 
 /* Explicit dark mode class support */
-.dark .edumind-footer,
-[data-theme="dark"] .edumind-footer {
+.dark .edutictac-footer,
+[data-theme="dark"] .edutictac-footer {
     --footer-bg: var(--lm-ink);
     --footer-border: var(--lm-ink);
     --footer-text: #a0a0a0;
@@ -164,7 +165,7 @@
 
 /* Tablet (768px and below) */
 @media (max-width: 768px) {
-    .edumind-footer {
+    .edutictac-footer {
         flex-wrap: wrap;
         justify-content: center;
         padding: 1rem 1.5rem;
@@ -192,7 +193,7 @@
 
 /* Mobile (600px and below) */
 @media (max-width: 600px) {
-    .edumind-footer {
+    .edutictac-footer {
         flex-direction: column;
         gap: 0.75rem;
         text-align: center;
@@ -218,7 +219,7 @@
 /* Accessibility Improvements */
 @media (prefers-reduced-motion: reduce) {
 
-    .edumind-footer,
+    .edutictac-footer,
     .nav-btn,
     .feedback-link {
         transition: none;
@@ -227,7 +228,7 @@
 
 /* High Contrast Mode Support */
 @media (prefers-contrast: high) {
-    .edumind-footer {
+    .edutictac-footer {
         border-top-width: 2px;
     }
 

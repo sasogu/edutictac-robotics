@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2025 EDUmind - Los Mundos Edufis
+ * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  */
 
@@ -14,7 +15,7 @@ import SensorGraphs from './components/SensorGraphs'
 import ExamplesPanel from './components/ExamplesPanel'
 import ExportPanel from './components/ExportPanel'
 import ProjectsPanel from './components/ProjectsPanel'
-import EDUmindFooter from './components/EDUmindFooter'
+import EduTicTacFooter from './components/EduTicTacFooter'
 import NavBar from './components/NavBar'
 import { useEinkMode } from './hooks/useEinkMode'
 import { useAppStore } from './store/useAppStore'
@@ -117,9 +118,9 @@ function App() {
     return (
       <main className="auth-gate" aria-live="polite">
         <div className="auth-gate__card">
-          <p className="edm-kicker">EDUmind Robotics</p>
+          <p className="edm-kicker">EduTicTac Robotics</p>
           <h1>Comprobando sesión segura</h1>
-          <p>Conectando con la identidad EDUmind.</p>
+          <p>Conectando con la identidad EduTicTac.</p>
         </div>
       </main>
     )
@@ -130,16 +131,16 @@ function App() {
       <main className="auth-gate">
         <div className="auth-gate__card">
           <p className="edm-kicker">Laboratorio educativo protegido</p>
-          <h1>EDUmind Robotics Lab</h1>
+          <h1>EduTicTac Robotics Lab</h1>
           <p>
-            Inicia sesión directamente con EDUmind para acceder al simulador,
+            Inicia sesión directamente con EduTicTac para acceder al simulador,
             al tutor de IA local y a las herramientas de exportación.
           </p>
           {new URLSearchParams(window.location.search).has('auth_error') && (
             <p className="auth-gate__error">No se pudo completar el acceso. Inténtalo de nuevo.</p>
           )}
           <a className="edm-button auth-gate__button" href={loginUrl()}>
-            Entrar con EDUmind
+            Entrar con EduTicTac
           </a>
         </div>
       </main>
@@ -175,7 +176,7 @@ function App() {
           <div className="edm-container">
             <header className="edm-hero">
               <p className="edm-kicker">Laboratorio virtual · NEZHA + micro:bit + Makey Makey</p>
-              <h1>EDUmind Robotics Lab</h1>
+              <h1>EduTicTac Robotics Lab</h1>
               <p className="edm-subtitle">
                 Aprende programación con micro:bit y Nezha mediante IA local
               </p>
@@ -253,8 +254,8 @@ function App() {
               </article>
             </section>
           </div>
-          <EDUmindFooter
-            appName="EDUmind Robotics"
+          <EduTicTacFooter
+            appName="EduTicTac Robotics"
             version="1.0.0"
             hideNavigation={true}
           />
@@ -282,7 +283,7 @@ function App() {
           <div className="lab-container">
             <header className="lab-header">
               <div className="lab-title">
-                <h1>EDUmind Robotics Lab</h1>
+                <h1>EduTicTac Robotics Lab</h1>
                 <p className="edm-kicker">Laboratorio Virtual</p>
                 <PolicyStrip />
               </div>
