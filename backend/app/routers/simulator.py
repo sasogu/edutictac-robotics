@@ -21,6 +21,8 @@
 Router para el simulador de micro:bit y Nezha.
 Permite ejecutar código y controlar simuladores sin hardware físico.
 """
+import asyncio
+
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 from typing import Optional, Dict, Any
@@ -202,8 +204,10 @@ async def execute_code(payload: ExecuteCodeRequest, request: Request):
     if not session:
         raise HTTPException(status_code=404, detail="Session not found")
 
-    # Ejecutar código
-    result = session.executor.execute_code(payload.code)
+    # Ejecutar código en un hilo aparte: es una llamada síncrona que, ante un
+    # bucle con muchas iteraciones, bloquearía el event loop y congelaría el
+    # backend entero para el resto de sesiones mientras dura.
+    result = await asyncio.to_thread(session.executor.execute_code, payload.code)
 
     return ExecuteCodeResponse(
         success=result["success"],

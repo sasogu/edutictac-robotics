@@ -91,9 +91,11 @@ class MicrobitAPI:
         return int((time.time() - self.sim.last_update) * 1000)
 
     def sleep(self, ms: int):
-        """Simula sleep (en simulador no bloquea)"""
+        """Simula sleep sin bloquear: solo se devuelve el estado final, así
+        que dormir de verdad no aporta nada y, multiplicado por miles de
+        iteraciones de un `while True`, podía tardar minuto y medio y
+        congelar el servidor entero mientras tanto (bug real, corregido)."""
         self.sim.add_log(f"sleep({ms}ms)")
-        time.sleep(min(max(ms, 0) / 1000.0, 0.01))
 
     def panic(self, code: int = 0):
         """Simula panic"""
