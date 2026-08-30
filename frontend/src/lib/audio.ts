@@ -105,14 +105,19 @@ export function playMusicFromLog(outputLog: string[]): void {
   for (const line of outputLog) {
     if (played >= MAX_EVENTS) break
 
-    const playMatch = line.match(/^music\.play\((\w+)\)$/)
+    // El backend antepone una marca de tiempo a cada entrada del log
+    // ("[1735599999.123] music.play(BIRTHDAY)"), así que hay que quitarla
+    // antes de comparar con el mensaje exacto.
+    const message = line.replace(/^\[[^\]]*\]\s*/, '')
+
+    const playMatch = message.match(/^music\.play\((\w+)\)$/)
     if (playMatch) {
       playTune(playMatch[1])
       played += 1
       continue
     }
 
-    const pitchMatch = line.match(/^music\.pitch\((-?\d+), (-?\d+)\)$/)
+    const pitchMatch = message.match(/^music\.pitch\((-?\d+), (-?\d+)\)$/)
     if (pitchMatch) {
       const frequency = Number(pitchMatch[1])
       const duration = Number(pitchMatch[2])
