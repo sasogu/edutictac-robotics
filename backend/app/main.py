@@ -19,7 +19,7 @@
 
 """
 EduTicTac Robotics API
-Sistema de aprendizaje de programación asistida por IA para micro:bit y Nezha
+Sistema de aprendizaje de programación para micro:bit y Nezha (simulador, editor y exportación)
 """
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -51,7 +51,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI(
     title="EduTicTac Robotics API",
     version="1.0.0",
-    description="API para aprendizaje de robótica educativa con IA local (micro:bit + Nezha)",
+    description="API para aprendizaje de robótica educativa (simulador, editor y exportación; micro:bit + Nezha)",
     docs_url="/api/docs",
     redoc_url="/api/redoc"
 )
@@ -127,16 +127,13 @@ app.include_router(websocket.router)
 async def health_check():
     """
     Endpoint de salud del sistema.
-    Verifica disponibilidad de Ollama y modelos.
+    La plataforma funciona sin IA: el simulador, el editor y la exportación
+    son autónomos. No se consulta ningún servicio externo.
     """
-    ollama_available = await ollama_service.check_health()
-    models = await ollama_service.list_models()
-    model_names = [m.get("name", "unknown") for m in models]
-
     return HealthResponse(
-        status="ok" if ollama_available else "degraded",
-        ollama_available=ollama_available,
-        models_available=model_names,
+        status="ok",
+        ollama_available=False,
+        models_available=[],
         version="1.0.0"
     )
 
@@ -145,28 +142,23 @@ async def health_check():
 async def readiness_check():
     """
     Readiness operativo para despliegue.
-    No exige que Ollama esté perfecto para servir simulador/editor, pero expone
-    claramente si la IA local está disponible y si la política local-first pasa.
+    El simulador, el editor y la exportación no dependen de ningún motor de IA.
     """
-    ollama_available = await ollama_service.check_health()
-    policy = ollama_service.get_policy_status()
-
     return {
-        "ready": policy["ai_endpoint_local"] and policy["remote_ai_allowed"] is False,
-        "status": "ok" if ollama_available else "degraded",
+        "ready": True,
+        "status": "ok",
         "capabilities": {
             "frontend_pwa": True,
             "simulator": True,
             "export": True,
-            "local_ai": ollama_available,
-            "privacy_first_policy": policy["prompts_persisted"] is False,
+            "local_ai": False,
+            "privacy_first_policy": True,
         },
         "active_simulator_sessions": len(simulator_manager.sessions),
         "policy": {
-            "mode": policy["mode"],
-            "privacy": policy["privacy"],
-            "ai_endpoint_local": policy["ai_endpoint_local"],
-            "remote_ai_allowed": policy["remote_ai_allowed"],
+            "mode": "local-first",
+            "privacy": "privacy-first",
+            "ai_enabled": False,
         },
         "version": "1.0.0",
     }
@@ -174,21 +166,10 @@ async def readiness_check():
 
 @app.get("/api/models", response_model=ModelsListResponse)
 async def list_models():
-    """Lista modelos disponibles en Ollama"""
-    models = await ollama_service.list_models()
-
-    ollama_models = [
-        OllamaModel(
-            name=m.get("name", "unknown"),
-            size=m.get("size"),
-            modified_at=m.get("modified_at")
-        )
-        for m in models
-    ]
-
+    """Lista modelos de IA disponibles (sin IA: lista vacía)"""
     return ModelsListResponse(
-        models=ollama_models,
-        total=len(ollama_models)
+        models=[],
+        total=0
     )
 
 
@@ -213,14 +194,7 @@ async def startup_event():
     """Evento de inicio de la aplicación"""
     logger.info("🚀 Starting EduTicTac Robotics API...")
 
-    # Verificar Ollama
-    ollama_ok = await ollama_service.check_health()
-    if ollama_ok:
-        logger.info("✅ Ollama is available")
-        models = await ollama_service.list_models()
-        logger.info(f"📦 Available models: {[m.get('name') for m in models]}")
-    else:
-        logger.warning("⚠️ Ollama is not available - AI features will not work")
+    # La plataforma funciona sin IA: no se arranca ni se espera ningún motor externo.
 
     # Cargar lecciones
     lessons_count = len(lesson_engine.get_all_lessons())
@@ -234,7 +208,6 @@ async def startup_event():
 async def shutdown_event():
     """Evento de cierre de la aplicación"""
     logger.info("👋 Shutting down EduTicTac Robotics API...")
-    await ollama_service.close()
     logger.info("✅ Cleanup complete")
 
 
@@ -245,13 +218,13 @@ async def root():
     return {
         "name": "EduTicTac Robotics API",
         "version": "1.0.0",
-        "description": "API para aprendizaje de robótica educativa con IA",
+        "description": "API para aprendizaje de robótica educativa (simulador, editor y exportación)",
         "docs": "/api/docs",
         "endpoints": {
             "health": "/api/health",
-            "models": "/api/models",
-            "chat": "/api/chat",
             "lessons": "/api/lessons",
+            "simulator": "/api/simulator",
+            "export": "/api/export",
             "policy": "/api/system/policy"
         }
     }

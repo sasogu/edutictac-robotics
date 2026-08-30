@@ -27,7 +27,7 @@ test('PWA: la aplicacion vuelve a cargar offline despues de una primera visita o
   await page.reload({ waitUntil: 'domcontentloaded' })
 
   await expect(page.getByRole('heading', { name: 'EduTicTac Robotics Lab' })).toBeVisible()
-  await expect(page.getByText(/IA local y privacidad/)).toBeVisible()
+  await expect(page.getByRole('button', { name: /Abrir Laboratorio/ })).toBeVisible()
 
   await context.setOffline(false)
 })

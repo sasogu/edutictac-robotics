@@ -3,7 +3,7 @@
  * Copyright (C) 2026 EduTicTac
  * Author: Luis Vilela Acuña
  *
- * NavBar persistente — navegación, estado IA y toggle e-ink
+ * NavBar persistente — navegación y toggle e-ink
  */
 
 import React, { useState } from 'react'
@@ -11,24 +11,20 @@ import { useEinkMode } from '../hooks/useEinkMode'
 import { logoutUrl, type AuthUser } from '../lib/auth'
 import './NavBar.css'
 
-type View = 'home' | 'lab' | 'vibe' | 'pedagogia'
+type View = 'home' | 'lab'
 
 interface NavBarProps {
   currentView: View
   onNavigate: (view: View) => void
-  isAiReady: boolean
-  isStreaming: boolean
   user: AuthUser | null
 }
 
 const NAV_LINKS: { view: View; label: string; icon: string }[] = [
   { view: 'home', label: 'Inicio', icon: '🏠' },
   { view: 'lab', label: 'Laboratorio', icon: '🔬' },
-  { view: 'vibe', label: 'Vibe Coding', icon: '✨' },
-  { view: 'pedagogia', label: 'Pedagogía', icon: '📚' },
 ]
 
-const NavBar: React.FC<NavBarProps> = ({ currentView, onNavigate, isAiReady, isStreaming, user }) => {
+const NavBar: React.FC<NavBarProps> = ({ currentView, onNavigate, user }) => {
   const { eink, setEink } = useEinkMode()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -43,8 +39,8 @@ const NavBar: React.FC<NavBarProps> = ({ currentView, onNavigate, isAiReady, isS
         >
           <span className="edm-navbar__logo-icon">⚙</span>
           <span className="edm-navbar__logo-text">
-            <span className="edm-navbar__logo-edu">EDU</span>
-            <span className="edm-navbar__logo-mind">mind</span>
+            <span className="edm-navbar__logo-edu">Edu</span>
+            <span className="edm-navbar__logo-mind">TicTac</span>
             <span className="edm-navbar__logo-sub">Robotics</span>
           </span>
         </button>
@@ -67,14 +63,6 @@ const NavBar: React.FC<NavBarProps> = ({ currentView, onNavigate, isAiReady, isS
 
         {/* Controles */}
         <div className="edm-navbar__controls">
-          {/* Estado IA */}
-          <div className="edm-navbar__ai-status" title={isStreaming ? 'IA pensando...' : isAiReady ? 'IA local activa' : 'IA no disponible'}>
-            <span className={`edm-navbar__ai-dot ${isStreaming ? 'edm-navbar__ai-dot--thinking' : isAiReady ? 'edm-navbar__ai-dot--ok' : 'edm-navbar__ai-dot--off'}`} />
-            <span className="edm-navbar__ai-label">
-              {isStreaming ? 'IA activa' : 'IA local'}
-            </span>
-          </div>
-
           {/* Toggle e-ink */}
           <button
             className={`edm-navbar__eink-btn ${eink ? 'edm-navbar__eink-btn--active' : ''}`}

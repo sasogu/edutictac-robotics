@@ -195,6 +195,36 @@
   flex-wrap: wrap;
 }
 
+.editor-mode-toggle {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  background: color-mix(in srgb, var(--lm-mental) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lm-mental) 30%, transparent);
+  border-radius: 10px;
+}
+
+.editor-mode-toggle .edm-button--small {
+  border: none;
+  background: transparent;
+  padding: 0.35rem 0.85rem;
+}
+
+.editor-mode-toggle .edm-button--small.active {
+  background: var(--edm-cyan);
+  color: #fff;
+}
+
+.blocks-notice {
+  margin: 0 0 0.6rem;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  background: #fff8e1;
+  border: 1px solid #f0d9a0;
+  color: #7a5b12;
+}
+
 .edm-button--small {
   padding: 0.45rem 0.95rem;
   font-size: 0.82rem;

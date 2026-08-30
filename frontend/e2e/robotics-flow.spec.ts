@@ -7,20 +7,30 @@ test.beforeEach(async ({ page }) => {
   await mockEdutictacApi(page)
 })
 
-test('flujo alumno: pide ayuda a la IA local, inserta codigo y lo ejecuta en el simulador', async ({ page }) => {
+test('flujo alumno: carga un ejemplo y lo ejecuta en el simulador', async ({ page }) => {
   await page.goto('/')
 
   await expect(page.getByRole('heading', { name: 'EduTicTac Robotics Lab' })).toBeVisible()
   await page.getByRole('button', { name: /Abrir Laboratorio/ }).click()
 
-  await expect(page.getByText(/IA local y privacidad/)).toBeVisible()
-  await expect(page.getByRole('heading', { name: /Tutor EduTicTac/ })).toBeVisible()
+  await page.getByRole('button', { name: /Ejemplos/ }).click()
+  await expect(page.getByText('Corazon E2E')).toBeVisible()
+  await page.getByText('Corazon E2E').click()
+  await page.getByRole('button', { name: /Usar este código/ }).click()
 
-  await page.getByPlaceholder(/Escribe tu pregunta o solicitud/).fill('Genera un corazon para micro:bit')
-  await page.getByPlaceholder(/Escribe tu pregunta o solicitud/).press('Enter')
+  await page.getByTestId('execute-code').click()
 
-  await expect(page.getByText(/display\.show\(Image\.HEART\)/)).toBeVisible()
-  await page.getByRole('button', { name: /Insertar código/ }).click()
+  await expect(page.getByTestId('led-2-2')).toHaveCSS('background-color', 'rgb(255, 51, 51)')
+  await expect(page.getByTestId('led-2-2')).toHaveCSS('opacity', '1')
+})
+
+test('flujo bloques: el modo Bloques genera codigo y lo ejecuta en el simulador', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: /Abrir Laboratorio/ }).click()
+
+  await page.getByRole('button', { name: /🧩 Bloques/ }).click()
+
+  /* El lienzo abre con el ejemplo por defecto (corazón en bucle). */
   await page.getByTestId('execute-code').click()
 
   await expect(page.getByTestId('led-2-2')).toHaveCSS('background-color', 'rgb(255, 51, 51)')

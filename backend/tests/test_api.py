@@ -47,7 +47,7 @@ def test_readiness_endpoint_exposes_operational_contract():
     assert data["capabilities"]["simulator"] is True
     assert data["capabilities"]["privacy_first_policy"] is True
     assert data["policy"]["mode"] == "local-first"
-    assert data["policy"]["remote_ai_allowed"] is False
+    assert data["policy"]["ai_enabled"] is False
 
 
 def test_application_metrics_record_requests_by_route_template():

@@ -22,16 +22,11 @@ import { useAppStore } from './store/useAppStore'
 import { checkAuth, loginUrl, type AuthState } from './lib/auth'
 
 /*
- * Vibe Coding y Pedagogía no hacen falta para abrir la app: se cargan cuando
- * el alumno entra en ellas. Así la primera pantalla pesa bastante menos, que
- * es lo que se sufre en el wifi de un colegio.
+ * El editor arrastra Monaco: 334 kB que la portada no necesita para nada.
+ * Los bloques (Blockly) también se cargan solo dentro del laboratorio.
  */
-const VibeCoding = lazy(() => import('./components/VibeCoding'))
-/* El editor arrastra Monaco y el chat arrastra el resaltado de sintaxis:
-   334 kB que la portada no necesita para nada. */
 const CodeEditor = lazy(() => import('./components/CodeEditor'))
-const ChatPanel = lazy(() => import('./components/ChatPanel'))
-const Pedagogia = lazy(() => import('./components/Pedagogia'))
+const BlocklyEditor = lazy(() => import('./components/BlocklyEditor'))
 
 /* Mensaje mientras llega el trozo de código de la vista. */
 const Cargando = () => (
@@ -43,17 +38,7 @@ const Cargando = () => (
 )
 
 
-type View = 'home' | 'lab' | 'vibe' | 'pedagogia'
-
-interface PolicyStatus {
-  ai?: {
-    mode?: string
-    privacy?: string
-    ai_endpoint_local?: boolean
-    model?: string
-    prompts_persisted?: boolean
-  }
-}
+type View = 'home' | 'lab'
 
 function App() {
   const [view, setView] = useState<View>('home')
@@ -63,7 +48,9 @@ function App() {
   const [showExport, setShowExport] = useState(false)
   const [showSensors, setShowSensors] = useState(false)
   const [showProjects, setShowProjects] = useState(false)
-  const [policyStatus, setPolicyStatus] = useState<PolicyStatus | null>(null)
+  const [editorMode, setEditorMode] = useState<'bloques' | 'codigo'>('codigo')
+  const [blockCode, setBlockCode] = useState('')
+  const [blocksNotice, setBlocksNotice] = useState('')
   const [auth, setAuth] = useState<AuthState>({ status: 'checking' })
 
   /* Inicializar e-ink desde localStorage en el arranque */
@@ -72,12 +59,9 @@ function App() {
   const {
     isSessionReady,
     simulatorState,
-    messages,
-    isStreaming,
     isExecuting,
     initSession,
     executeCode,
-    sendChatMessage,
     pressButton,
     releaseButton,
     updateSensor,
@@ -98,21 +82,22 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if ((view === 'lab' || view === 'vibe') && !isSessionReady) {
+    if (view === 'lab' && !isSessionReady) {
       initSession()
     }
   }, [view, isSessionReady, initSession, auth.status])
 
+  /* Un ejemplo/proyecto es código: si se inserta con el modo Bloques activo,
+     no se puede materializar en bloques. Se avisa y se deja listo para el
+     modo Código. */
   useEffect(() => {
-    fetch('/api/system/policy')
-      .then((response) => (response.ok ? response.json() : null))
-      .then((policy) => setPolicyStatus(policy))
-      .catch(() => setPolicyStatus(null))
-  }, [])
-
-  const aiLocal = policyStatus?.ai?.ai_endpoint_local !== false
-  const aiModel = policyStatus?.ai?.model ?? 'modelo local'
-  const promptsPersisted = policyStatus?.ai?.prompts_persisted === true
+    if (externalCode && editorMode === 'bloques') {
+      setBlocksNotice('Este ejemplo o proyecto es código: cambia a Código para verlo.')
+    }
+    if (editorMode === 'codigo') {
+      setBlocksNotice('')
+    }
+  }, [externalCode, editorMode])
 
   if (auth.status === 'checking') {
     return (
@@ -134,7 +119,7 @@ function App() {
           <h1>EduTicTac Robotics Lab</h1>
           <p>
             Inicia sesión directamente con EduTicTac para acceder al simulador,
-            al tutor de IA local y a las herramientas de exportación.
+            al editor y a las herramientas de exportación.
           </p>
           {new URLSearchParams(window.location.search).has('auth_error') && (
             <p className="auth-gate__error">No se pudo completar el acceso. Inténtalo de nuevo.</p>
@@ -147,29 +132,13 @@ function App() {
     )
   }
 
-  const PolicyStrip = () => (
-    <aside className={`policy-strip ${aiLocal ? 'policy-strip--ok' : 'policy-strip--warn'}`}>
-      <strong>IA local y privacidad:</strong>{' '}
-      {aiLocal ? 'Ollama local activo' : 'Revisar endpoint de IA'} · {aiModel} ·{' '}
-      {promptsPersisted ? 'historial persistente' : 'sin persistir conversaciones'} · uso guiado para robótica educativa.
-    </aside>
-  )
-
   return (
     <>
       <NavBar
         currentView={view}
         onNavigate={(v) => setView(v)}
-        isAiReady={aiLocal}
-        isStreaming={isStreaming}
         user={'user' in auth ? auth.user : null}
       />
-
-      {view === 'pedagogia' && (
-        <Suspense fallback={<Cargando />}>
-          <Pedagogia aiModel={aiModel} aiLocal={aiLocal} onStart={() => setView('lab')} />
-        </Suspense>
-      )}
 
       {view === 'home' && (
         <main className="edm-app">
@@ -178,22 +147,11 @@ function App() {
               <p className="edm-kicker">Laboratorio virtual · NEZHA + micro:bit + Makey Makey</p>
               <h1>EduTicTac Robotics Lab</h1>
               <p className="edm-subtitle">
-                Aprende programación con micro:bit y Nezha mediante IA local
+                Aprende a programar robots desde el navegador, sin necesidad de hardware
               </p>
-              <PolicyStrip />
               <div className="edm-hero-actions">
-                <button className="edm-button" type="button" onClick={() => setView('vibe')}>
-                  ✨ Vibe Coding
-                </button>
                 <button className="edm-button" type="button" onClick={() => setView('lab')}>
                   🔬 Abrir Laboratorio
-                </button>
-                <button
-                  className="edm-button edm-button--ghost"
-                  type="button"
-                  onClick={() => setView('pedagogia')}
-                >
-                  📚 Por qué la IA es local
                 </button>
               </div>
             </header>
@@ -209,15 +167,6 @@ function App() {
               </article>
 
               <article className="edm-card edm-card--lime">
-                <div className="edm-card__badge">Asistente IA</div>
-                <h3>Tutor educativo local</h3>
-                <p>
-                  Pregunta, aprende y genera código con una IA que se ejecuta en el
-                  propio centro. Te explica cada línea, no solo te la entrega.
-                </p>
-              </article>
-
-              <article className="edm-card edm-card--pink">
                 <div className="edm-card__badge">Editor</div>
                 <h3>Código MicroPython</h3>
                 <p>
@@ -226,7 +175,7 @@ function App() {
                 </p>
               </article>
 
-              <article className="edm-card edm-card--cyan">
+              <article className="edm-card edm-card--pink">
                 <div className="edm-card__badge">Nuevo</div>
                 <h3>📚 Biblioteca de ejemplos</h3>
                 <p>
@@ -235,21 +184,12 @@ function App() {
                 </p>
               </article>
 
-              <article className="edm-card edm-card--lime">
+              <article className="edm-card edm-card--cyan">
                 <div className="edm-card__badge">Nuevo</div>
                 <h3>📤 Exportar a hardware</h3>
                 <p>
                   Exporta tu código a .py o paquete ZIP listo para cargar en
                   micro:bit, Nezha o Makey Makey real.
-                </p>
-              </article>
-
-              <article className="edm-card edm-card--pink">
-                <div className="edm-card__badge">Nuevo</div>
-                <h3>✨ Vibe Coding con IA</h3>
-                <p>
-                  Describe lo que quieres crear con tus palabras. La IA escribe
-                  el código, tú lo lees, pruebas y modificas.
                 </p>
               </article>
             </section>
@@ -262,21 +202,6 @@ function App() {
         </main>
       )}
 
-      {view === 'vibe' && (
-        <Suspense fallback={<Cargando />}>
-        <VibeCoding
-          onExecute={executeCode}
-          isExecuting={isExecuting}
-          simulatorState={simulatorState}
-          onButtonPress={pressButton}
-          onButtonRelease={releaseButton}
-          onSendMessage={sendChatMessage}
-          isStreaming={isStreaming}
-          messages={messages}
-        />
-        </Suspense>
-      )}
-
       {view === 'lab' && (
         <Suspense fallback={<Cargando />}>
         <main className="edm-app lab-view">
@@ -285,9 +210,24 @@ function App() {
               <div className="lab-title">
                 <h1>EduTicTac Robotics Lab</h1>
                 <p className="edm-kicker">Laboratorio Virtual</p>
-                <PolicyStrip />
               </div>
               <div className="lab-header-actions">
+                <span className="editor-mode-toggle" role="group" aria-label="Modo de edición">
+                  <button
+                    className={`edm-button--small ${editorMode === 'bloques' ? 'active' : ''}`}
+                    type="button"
+                    onClick={() => setEditorMode('bloques')}
+                  >
+                    🧩 Bloques
+                  </button>
+                  <button
+                    className={`edm-button--small ${editorMode === 'codigo' ? 'active' : ''}`}
+                    type="button"
+                    onClick={() => setEditorMode('codigo')}
+                  >
+                    ⌨️ Código
+                  </button>
+                </span>
                 <button
                   className={`edm-button--small ${showProjects ? 'active' : ''}`}
                   type="button"
@@ -331,12 +271,28 @@ function App() {
                 </div>
 
                 <div className="lab-section">
-                  <CodeEditor
-                    onExecute={executeCode}
-                    isExecuting={isExecuting}
-                    externalCode={externalCode}
-                    onCodeChange={handleCodeChange}
-                  />
+                  {blocksNotice && (
+                    <p className="blocks-notice" role="status">
+                      {blocksNotice}
+                    </p>
+                  )}
+                  {editorMode === 'bloques' ? (
+                    <BlocklyEditor
+                      onExecute={executeCode}
+                      isExecuting={isExecuting}
+                      onCodeChange={(code) => {
+                        setBlockCode(code)
+                        setCurrentCode(code)
+                      }}
+                    />
+                  ) : (
+                    <CodeEditor
+                      onExecute={executeCode}
+                      isExecuting={isExecuting}
+                      externalCode={externalCode || blockCode || undefined}
+                      onCodeChange={handleCodeChange}
+                    />
+                  )}
                 </div>
 
                 {showSensors && (
@@ -378,13 +334,6 @@ function App() {
                     />
                   </div>
                 )}
-
-                <ChatPanel
-                  messages={messages}
-                  isStreaming={isStreaming}
-                  onSendMessage={sendChatMessage}
-                  onInsertCode={handleInsertCode}
-                />
               </div>
             </div>
           </div>

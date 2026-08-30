@@ -1,0 +1,68 @@
+/* Editor de bloques: iguala la altura del editor de código y mantiene un
+   estilo coherente con el resto del laboratorio. */
+
+.blockly-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.blockly-editor__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.blockly-editor__badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(76, 156, 211, 0.15);
+  color: #2c7fb8;
+}
+
+.blockly-editor__header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.blockly-editor__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.blockly-editor__actions .active {
+  outline: 2px solid rgba(76, 156, 211, 0.5);
+}
+
+/* Área del lienzo de bloques. */
+.blockly-editor__workspace {
+  width: 100%;
+  height: 400px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Código generado por los bloques. */
+.blockly-editor__code {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  background: #1e1e2e;
+  color: #d7d7e2;
+  border-radius: 10px;
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  max-height: 260px;
+  overflow-y: auto;
+  white-space: pre;
+}

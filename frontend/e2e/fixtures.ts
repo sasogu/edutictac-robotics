@@ -33,22 +33,6 @@ export const mockEdutictacApi = async (page: Page) => {
     })
   })
 
-  await page.route('**/api/system/policy', async (route) => {
-    await route.fulfill({
-      json: {
-        mode: 'local-first',
-        privacy: 'privacy-first',
-        ai: {
-          mode: 'local',
-          privacy: 'privacy-first',
-          ai_endpoint_local: true,
-          model: 'phi3:latest',
-          prompts_persisted: false,
-        },
-      },
-    })
-  })
-
   await page.route('**/api/simulator/session/create', async (route) => {
     await route.fulfill({
       json: {
@@ -110,23 +94,6 @@ export const mockEdutictacApi = async (page: Page) => {
         'content-disposition': 'attachment; filename=e2e_hardware_bundle.zip',
       },
       body: 'PK-e2e-hardware-bundle',
-    })
-  })
-
-  await page.route('**/api/chat/message/stream', async (route) => {
-    const response = [
-      `data: ${JSON.stringify(`Claro, revisa este codigo antes de ejecutarlo:\n\n\`\`\`python\n${generatedCode}\`\`\``)}`,
-      'data: [DONE]',
-      '',
-    ].join('\n\n')
-
-    await route.fulfill({
-      status: 200,
-      headers: {
-        'content-type': 'text/event-stream',
-        'cache-control': 'no-cache',
-      },
-      body: response,
     })
   })
 }

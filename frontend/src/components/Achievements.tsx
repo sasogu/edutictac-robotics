@@ -57,7 +57,6 @@ const ALL_ACHIEVEMENTS: Omit<Achievement, 'unlocked' | 'unlockedAt'>[] = [
     { id: 'nezha_motors', title: 'Robot Driver', description: 'Controla los motores de Nezha', icon: '🤖', points: 30, category: 'master' },
     { id: 'makey_makey', title: 'Inventor', description: 'Crea un instrumento con Makey Makey', icon: '🎹', points: 35, category: 'master' },
     { id: 'export_code', title: 'Compartidor', description: 'Exporta tu código a otro formato', icon: '📤', points: 20, category: 'master' },
-    { id: 'ai_help', title: 'Aprendiz IA', description: 'Pide ayuda al asistente de IA', icon: '🤖', points: 15, category: 'master' },
 ]
 
 interface AchievementsProps {
