@@ -74,19 +74,12 @@ const translations: Record<string, FooterTranslations> = {
 };
 
 export default function EduTicTacFooter({
-    appName,
     version,
     versionStage,
-    author = 'Luis Vilela Acuña',
-    year = new Date().getFullYear(),
-    previousPage,
-    nextPage,
-    homeHref,
     feedbackUrl,
     feedbackLabel,
     className = '',
     locale = 'es',
-    hideNavigation = false,
     showVersion = true
 }: EduTicTacFooterProps) {
     const t = translations[locale] || translations.es;
@@ -97,39 +90,8 @@ export default function EduTicTacFooter({
 
     return (
         <footer className={`edutictac-footer ${className}`}>
-            {!hideNavigation && (previousPage || nextPage || homeHref) && (
-                <div className="footer-nav">
-                    {previousPage && (
-                        <a href={previousPage.href} className="nav-btn nav-btn-prev">
-                            {previousPage.label || t.previous}
-                        </a>
-                    )}
-
-                    {previousPage && (nextPage || homeHref) && (
-                        <span className="divider">|</span>
-                    )}
-
-                    {homeHref && !nextPage && (
-                        <a href={homeHref} className="nav-btn nav-btn-home">
-                            {t.home}
-                        </a>
-                    )}
-
-                    {nextPage && (
-                        <a href={nextPage.href} className="nav-btn nav-btn-next">
-                            {nextPage.label || t.next}
-                        </a>
-                    )}
-                </div>
-            )}
-
             <div className="footer-info">
-                <p>
-                    {t.copyright.replace('{year}', year.toString())}{' '}
-                    <strong>{author}</strong>
-                    {appName && <span className="footer-app-name"> · {appName}</span>}
-                </p>
-                <p className="footer-license" style={{ marginTop: '0.35rem', fontSize: '0.875rem' }}>
+                <p className="footer-license" style={{ fontSize: '0.875rem' }}>
                     Software libre con licencia{' '}
                     <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>AGPL-3.0-or-later</a>
                     {' / '}
@@ -139,53 +101,6 @@ export default function EduTicTacFooter({
                         Derivado de EDUmind Robotics Lab
                     </a>
                 </p>
-            </div>
-
-            <div className="footer-legal" style={{
-                marginTop: '1rem',
-                textAlign: 'center',
-                fontSize: '0.875rem',
-                color: '#6b7280'
-            }}>
-                <a href="https://edutictac.es/es/legal/privacidad" target="_blank" rel="noopener noreferrer" style={{
-                    color: 'inherit',
-                    textDecoration: 'none',
-                    transition: 'color 0.2s'
-                }}>Privacidad</a>
-                <span style={{ margin: '0 0.5rem' }}>·</span>
-                <a href="https://edutictac.es/es/legal" target="_blank" rel="noopener noreferrer" style={{
-                    color: 'inherit',
-                    textDecoration: 'none'
-                }}>Aviso Legal</a>
-                <span style={{ margin: '0 0.5rem' }}>·</span>
-                <a href="https://edutictac.es/es/legal/cookies" target="_blank" rel="noopener noreferrer" style={{
-                    color: 'inherit',
-                    textDecoration: 'none'
-                }}>Cookies</a>
-                <span style={{ margin: '0 0.5rem' }}>·</span>
-                <a href="https://edutictac.es/es/legal/ia" target="_blank" rel="noopener noreferrer" style={{
-                    color: 'inherit',
-                    textDecoration: 'none'
-                }}>Política de IA</a>
-                <span style={{ margin: '0 0.5rem' }}>·</span>
-                <a href="/proponer-deporte" style={{
-                    color: 'inherit',
-                    textDecoration: 'none'
-                }}>Proponer Deporte</a>
-                <span style={{ margin: '0 0.5rem' }}>·</span>
-                <a href="https://donar.edutictac.es" target="_blank" rel="noopener noreferrer" style={{
-                    color: '#10b981',
-                    textDecoration: 'none',
-                    fontWeight: '500'
-                }}>💚 Apoyar</a>
-
-                <div style={{ marginTop: '0.5rem', display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                    <a href="https://t.me/EduTicTac_es" target="_blank" rel="noopener noreferrer" style={{ color: '#0088cc', textDecoration: 'none' }}>📢 Telegram</a>
-                    <a href="https://instagram.com/edutictac_es" target="_blank" rel="noopener noreferrer" style={{ color: '#E1306C', textDecoration: 'none' }}>📸 Instagram</a>
-                    <a href="https://x.com/edutictac_es" target="_blank" rel="noopener noreferrer" style={{ color: '#000000', textDecoration: 'none' }}>𝕏 Twitter</a>
-                    <a href="https://mastodon.social/@EduTicTac" target="_blank" rel="noopener noreferrer" style={{ color: '#6364FF', textDecoration: 'none' }}>🐘 Mastodon</a>
-                    <a href="https://blog.edutictac.es" target="_blank" rel="noopener noreferrer" style={{ color: '#10b981', textDecoration: 'none' }}>📝 Blog</a>
-                </div>
             </div>
 
             <div className="footer-meta">

@@ -19,6 +19,7 @@
 
 import { create } from 'zustand'
 import axios from 'axios'
+import { playMusicFromLog } from '../lib/audio'
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? '/api'
 
@@ -353,6 +354,10 @@ export const useAppStore = create<AppState>((set, get) => ({
         executionOutput: output_log ?? [],
         executionErrors: success ? (error_log ?? []) : [error, ...(error_log ?? [])].filter(Boolean),
       })
+
+      if (success && output_log?.length) {
+        playMusicFromLog(output_log)
+      }
     } catch (error: unknown) {
       console.error('❌ Error ejecutando código:', error)
       const message = axios.isAxiosError(error)
