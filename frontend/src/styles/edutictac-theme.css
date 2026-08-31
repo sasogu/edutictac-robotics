@@ -22,6 +22,34 @@
   --ett-ink-3: #8a8377;
   --ett-rule: #c7c0b1;
 
+  /*
+   * Tokens --lm-* (Lámina): varios CSS de componente los usan directamente,
+   * sin valor de respaldo, así que tienen que quedar definidos aquí de verdad
+   * y no solo como fallback de los --edm-*. Los valores son los mismos que ya
+   * se usaban como fallback en este archivo, para no cambiar nada donde ya
+   * funcionaba.
+   */
+  --lm-paper: #e9e6dd;
+  --lm-paper-2: #f0ede5;
+  --lm-ink: #1c1a16;
+  --lm-ink-2: #4f4a41;
+  --lm-ink-3: #8a8377;
+  --lm-rule: #c7c0b1;
+  --lm-rule-strong: #1c1a16;
+  --lm-mental: #3f7d99;
+  --lm-mental-text: #2f6076;
+  --lm-emocional: #6ea94a;
+  --lm-emocional-text: #3f6b2a;
+  --lm-social: #e8a92e;
+  --lm-social-text: #7d560e;
+  --lm-fisico: #e8613f;
+  --lm-fisico-text: #a63a1f;
+  --lm-fisico-deep: #a63a1f;
+  --lm-focus: #3f7d99;
+  --lm-display: 'Bricolage Grotesque', 'Outfit', sans-serif;
+  --lm-body: 'Poppins', 'Outfit', system-ui, sans-serif;
+  --lm-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
   /* Tipografía de la Lámina. Bricolage tiene carácter para los títulos;
      Poppins es redonda y muy legible para lectores jóvenes. */
   --edm-font-head: var(--lm-display, 'Bricolage Grotesque', 'Outfit', sans-serif);
