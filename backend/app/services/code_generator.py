@@ -74,11 +74,14 @@ class CodeGenerator:
                 platform=Platform.MICROBIT,
                 code='''from microbit import *
 
-# Corazón que parpadea infinitamente
+# Corazón que parpadea infinitamente. Empieza apagado y termina mostrando
+# el corazón: el simulador ejecuta el bucle entero de golpe (no en tiempo
+# real), así que si el bucle terminara apagado la pantalla se vería en
+# blanco al terminar y parecería que el ejemplo no funciona.
 while True:
-    display.show(Image.HEART)  # Mostrar corazón
-    sleep(500)                  # Esperar medio segundo
     display.clear()             # Apagar LEDs
+    sleep(500)                  # Esperar medio segundo
+    display.show(Image.HEART)  # Mostrar corazón
     sleep(500)                  # Esperar medio segundo
 ''',
                 tags=["led", "animación", "bucle"],
